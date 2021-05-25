@@ -10,8 +10,6 @@ function tokenizer(text) {
     text = text.replace(/\n/gi, '')
     text = text.split("(").join(' ( ')
     text = text.split(")").join(' ) ')
-    text = text.split("{").join(' ( ')
-    text = text.split("}").join(' ) ')
     return text.split(" ").filter(f => !blacklist.includes(f))
 }
 
@@ -130,5 +128,6 @@ const input_test = `
     (print (fact 12))
 )
 `
-console.log(parser(tokenizer(input_test)))
-lispEval(parser(tokenizer(input_test)), default_env)
+console.log(tokenizer("(fn (x) (* x x))"))
+// console.log(parser(tokenizer(input_test)))
+// lispEval(parser(tokenizer(input_test)), default_env)
