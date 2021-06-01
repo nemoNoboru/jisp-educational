@@ -4,6 +4,8 @@
  * written in js as a POC to be rewritten in rust later
  */
 
+const fs = require('fs');
+
 const blacklist = ['', '\n', ' ']
 
 function tokenizer(text) {
@@ -63,7 +65,7 @@ function lispEval(exp, env) {
     if (exp.length && exp.length > 1) {
         if (typeof exp[0] === 'string') {
             if (exp[0] === 'define') {
-                env[[exp[1]]] = lispEval(exp[2], env)
+                env[exp[1]] = lispEval(exp[2], env)
                 return exp[2]
             }
             if (exp[0] === 'fn') {
@@ -72,9 +74,6 @@ function lispEval(exp, env) {
             }
             if (exp[0] === 'if') {
                 const [op, cond, a, b] = exp
-                console.log('cond', lispEval(cond, env))
-                console.log('a', a)
-                console.log('b', b)
                 if (lispEval(cond, env)) {
                     return lispEval(a, env)
                 } else {
@@ -104,6 +103,16 @@ function lispEval(exp, env) {
     }
 }
 
+// function repl() {
+//     const env = default_env
+//     for(;;) {
+//         const input = fs.readFileSync(0, {flag: 'r'}).toString()
+//         lispEval(parser(tokenizer(input)), env)
+//     }
+// }
+
+// repl()
+
 const input_test_complex = `
 (main 
     (+ 1 1)
@@ -125,9 +134,9 @@ const input_test = `
             )
         )
     )
-    (print (fact 12))
+    (print (fact 13))
 )
 `
 console.log(tokenizer("(fn (x) (* x x))"))
 // console.log(parser(tokenizer(input_test)))
-// lispEval(parser(tokenizer(input_test)), default_env)
+lispEval(parser(tokenizer(input_test)), default_env)
