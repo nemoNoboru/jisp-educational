@@ -41,7 +41,7 @@ function parser(tokens) {
 
 const default_env = {
     '+': (list) => list.reduce((a, b) => a + b, 0),
-    '-': (list) => list.reduce((a, b) => b - a, 0),
+    '-': (list) => list.length === 1 ? -list[0] : list.slice(1).reduce((a, b) => a - b, list[0]),
     '*': (list) => list.reduce((a, b) => a * b, 1),
     'print': (list) => console.log(list),
     'eq': ([a, b]) => a === b
@@ -123,7 +123,7 @@ const input_test = `
         (fn (x) (
             if (eq x 0)
                 (1)
-                (* (fact (- 1 x)) x)
+                (* (fact (- x 1)) x)
             )
         )
     )

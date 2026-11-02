@@ -11,7 +11,7 @@ this is a fully working example of a jisp program featuring lambdas, recursion, 
         (
             if (eq x 0)
                 (1)
-                (* (fact (- 1 x)) x)
+                (* (fact (- x 1)) x)
             )
         )
     )
